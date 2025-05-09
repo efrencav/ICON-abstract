@@ -1660,6 +1660,7 @@ input {
 .sm-font {
   font-size: 14px;
 }
+
 .med-font {
   font-size: 24px;
   font-weight: 300;
@@ -4651,6 +4652,7 @@ blockquote footer {
 .sticky-nav a {
   display: inline-block;
 }
+
 /* Stylized Timeline */
 .timeline {
   list-style: none;
@@ -4690,4 +4692,46 @@ blockquote footer {
   margin: 5px 0 0;
   color: #454445;
   font-size: 1rem;
+}
+
+.process__item ul {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 20px;
+  text-align: left;
+}
+
+.process__item ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 10px;
+  text-align: left;
+}
+
+.process__item ul li svg {
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.offer__item-two .offer-description {
+  color: #ccc !important;
+  margin-top: 5px;
+  margin-left: 5px;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.offer-description {
+  display: block;
+  color: #ccc;
+  /* Or your light color for contrast on dark bg */
+  font-size: 16px;
+  margin: 5px 0 15px 0;
+  line-height: 1.5;
+}
+
+.offer-description.wow {
+  visibility: visible !important;
+  opacity: 1 !important;
 }
