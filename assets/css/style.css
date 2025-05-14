@@ -4735,3 +4735,28 @@ blockquote footer {
   visibility: visible !important;
   opacity: 1 !important;
 }
+
+.quiz-container { 
+  max-width: 70%; 
+  margin: 40px auto; 
+  /* background: #fff;  */
+  padding: 30px; 
+  /* border-radius: 10px;  */
+  /* box-shadow: 0 2px 10px rgba(0,0,0,0.1);  */
+}
+
+  .question { 
+    margin-bottom: 30px;
+  }
+  .question label { 
+    display: block; 
+    margin-bottom: 10px; 
+    cursor: pointer; 
+  }
+
+  #result { 
+    margin-top: 20px; 
+    padding: 20px; 
+    background: #E5D8CE; 
+    border-radius: 8px; 
+  }
