@@ -189,7 +189,6 @@
     <!-- Sidebar area end here -->
 
     <main>
-
         <!-- Banner area start here -->
         <section class="banner-inner-area-two pt-160 pb-80 bg-image"
             data-background="../assets/images/bg/banner-inner-white.png">
@@ -207,8 +206,8 @@
         </section>
         <!-- Banner area end here -->
 
-        <section class="service-two-area pt-120 sub-bg-two paralax__animation">
-            <div class="quiz-container">
+        <section class="about-area paralax__animation pt-120 pb-120 inner-sub-bg-two">
+            <div class="container">
                 <h2 class="wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1000ms">
                     Not Sure Where to Start? <br><span></span>Discover Your Perfect Tier.</span>
                 </h2>
@@ -219,44 +218,48 @@
                     growth.
                     <!-- <a href="about.html" class="secondary-color fw-700 primary-hover">Read More</a> -->
                 </p>
-            </div>
-            <div class="quiz-container">
-                <form id="quizForm">
-                    <div class="question">
-                        <h3>1. Where is your brand currently?</h3>
-                        <label><input type="radio" name="stage" value="foundation"> We’re building our brand from
-                            scratch.</label>
-                        <label><input type="radio" name="stage" value="foundation"> We need clarity and
-                            structure.</label>
-                        <label><input type="radio" name="stage" value="pro"> We have a brand but lack consistent
-                            messaging or systems.</label>
-                        <label><input type="radio" name="stage" value="market"> We’re running campaigns and need smarter
-                            optimization.</label>
-                    </div>
 
-                    <div class="question">
-                        <h3>2. What are your current business goals?</h3>
-                        <label><input type="radio" name="goal" value="foundation"> Get brand clarity and launch
-                            properly.</label>
-                        <label><input type="radio" name="goal" value="pro"> Improve our funnel and digital
-                            presence.</label>
-                        <label><input type="radio" name="goal" value="market"> Scale, track performance, and optimize
-                            marketing spend.</label>
-                    </div>
+                <div class="quiz-container wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1000ms">
+                    <form id="quizForm">
+                        <div class="question">
+                            <h3>1. Where is your brand currently?</h3>
+                            <label><input type="radio" name="stage" value="foundation"> We’re building our brand from
+                                scratch.</label>
+                            <label><input type="radio" name="stage" value="foundation"> We need clarity and
+                                structure.</label>
+                            <label><input type="radio" name="stage" value="pro"> We have a brand but lack consistent
+                                messaging or systems.</label>
+                            <label><input type="radio" name="stage" value="market"> We’re running campaigns and need
+                                smarter
+                                optimization.</label>
+                        </div>
 
-                    <div class="question">
-                        <h3>3. Which systems do you have in place?</h3>
-                        <label><input type="radio" name="system" value="foundation"> No CRM or basic website
-                            only.</label>
-                        <label><input type="radio" name="system" value="pro"> CRM, email marketing, basic SEO in
-                            place.</label>
-                        <label><input type="radio" name="system" value="market"> We have automation, dashboards, and
-                            paid media running.</label>
-                    </div>
+                        <div class="question">
+                            <h3>2. What are your current business goals?</h3>
+                            <label><input type="radio" name="goal" value="foundation"> Get brand clarity and launch
+                                properly.</label>
+                            <label><input type="radio" name="goal" value="pro"> Improve our funnel and digital
+                                presence.</label>
+                            <label><input type="radio" name="goal" value="market"> Scale, track performance, and
+                                optimize
+                                marketing spend.</label>
+                        </div>
 
-                    <button type="button" onclick="calculateResult()">See My Tier</button>
-                </form>
-                <div id="result"></div>
+                        <div class="question">
+                            <h3>3. Which systems do you have in place?</h3>
+                            <label><input type="radio" name="system" value="foundation"> No CRM or basic website
+                                only.</label>
+                            <label><input type="radio" name="system" value="pro"> CRM, email marketing, basic SEO in
+                                place.</label>
+                            <label><input type="radio" name="system" value="market"> We have automation, dashboards, and
+                                paid media running.</label>
+                        </div>
+
+                        <button class="btn-one wow fadeInDown mt-20" data-wow-delay="200ms" data-wow-duration="1000ms"
+                            type="button" onclick="calculateResult()">See My Tier</button>
+                    </form>
+                    <div id="result"></div>
+                </div>
             </div>
         </section>
     </main>
@@ -269,7 +272,7 @@
                     <div class="row g-4 justify-content-between">
                         <div class="col-lg-4 col-sm-6 wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1000ms">
                             <div class="footer-two__item">
-                                <a href=" index.html" class="logo mb-20">
+                                <a href="../index.html" class="logo mb-20">
                                     <img src="../assets/images/logo/logo-icon.svg" alt="image" />
                                 </a>
                                 <p>
@@ -277,10 +280,12 @@
                                     clarity and scale through the ICON Method.
                                 </p>
                                 <div class="social-icon mt-20">
-                                    <a href="#0"><i class="fa-brands fa-facebook-f"></i></a>
-                                    <a href="#0"><i class="fa-brands fa-linkedin-in"></i></a>
-                                    <a href="#0"><i class="fa-brands fa-instagram"></i></a>
-                                    <a href="#0"><i class="fa-brands fa-whatsapp"></i></a>
+                                    <a href="https://www.facebook.com/AbstractCreative"><i
+                                            class="fa-brands fa-facebook-f"></i></a>
+                                    <a href="https://www.linkedin.com/company/abstract-creative-houston"><i
+                                            class="fa-brands fa-linkedin-in"></i></a>
+                                    <a href="https://www.instagram.com/abstr8ct/"><i
+                                            class="fa-brands fa-instagram"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -289,51 +294,45 @@
                                 <h4 class="title mb-20">Company</h4>
                                 <ul class="link">
                                     <li>
-                                        <a href="about.html">About Us</a>
+                                        <a href="../about.html">About</a>
                                     </li>
                                     <li>
-                                        <a href="service.html">Services</a>
+                                        <a href="../icon-method/index.html">The ICON Method</a>
                                     </li>
                                     <li>
-                                        <a href="blog/index.html">Blog</a>
+                                        <a href="../services/index.html">The ICON Brand Studio</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="200ms" data-wow-duration="1000ms">
+                            <div class="footer-two__item">
+                                <h4 class="title mb-20">Insights</h4>
+                                <ul class="link">
+                                    <li>
+                                        <a href="../workshops/index.html">Workshops</a>
                                     </li>
                                     <li>
-                                        <a href="pricing.html">Pricing</a>
+                                        <a href="../case-studies/index.html">Case Studies</a>
+                                    </li>
+                                    <li>
+                                        <a href="../blog/index.html">Blogs</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                         <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1000ms">
                             <div class="footer-two__item">
-                                <h4 class="title mb-20">Support</h4>
-                                <ul class="link">
-                                    <li>
-                                        <a href="contact.html">Contact Us</a>
-                                    </li>
-                                    <li>
-                                        <a href="pricing.html">FAQ</a>
-                                    </li>
-                                    <li>
-                                        <a href="service.html">Customer Service</a>
-                                    </li>
-                                    <li>
-                                        <a href="error.html">Terms Conditions</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-lg-2 col-sm-6 wow fadeInUp" data-wow-delay="600ms" data-wow-duration="1000ms">
-                            <div class="footer-two__item">
                                 <h4 class="title mb-20">Legal</h4>
                                 <ul class="link">
                                     <li>
-                                        <a href="error.html">Privacy Policy</a>
+                                        <a href="../privacy.html">Privacy Policy</a>
                                     </li>
                                     <li>
-                                        <a href="error.html">Cookie Policy</a>
+                                        <a href="../terms-of-services.html">Terms Conditions</a>
                                     </li>
                                     <li>
-                                        <a href="error.html">Copyright</a>
+                                        <a href="../cookies.html">Cookies</a>
                                     </li>
                                 </ul>
                             </div>
@@ -344,7 +343,7 @@
         </div>
         <div class="footer-two__copytext">
             <p class="wow fadeInDown" data-wow-delay="400ms" data-wow-duration="1000ms">
-                &copy; 2017–2025 <a href="index.html" class="primary-hover">Abstract Creative</a>, LLC. All rights
+                &copy; 2017–2025 <a href="../index.html" class="primary-hover">Abstract Creative</a>, LLC. All rights
                 reserved.
                 The ICON Method™, The ICON Brand Studio™, Foundation™, Pro Growth™, and Market Authority™ are
                 proprietary trademarks of Abstract Creative, pending registration.

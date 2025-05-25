@@ -216,11 +216,29 @@
             ICON Method™. Whether you're just starting out or ready to scale, we provide the clarity, strategy, and
             systems to make your brand not just look good—but lead.
           </p>
-          <div class="d-flex align-items-center gap-4 mt-40">
-            <a href="./resources/blueprint.html" class="btn-one wow fadeInDown" data-wow-delay="200ms"
-              data-wow-duration="1000ms" id="btn-icon-print">Download The ICON Method Blueprint
+          <div class="d-flex align-items-center gap-4 mt-40 hs-cta-trigger-button hs-cta-trigger-button-215502066394">
+            <!-- <a href="#" class="btn-one wow fadeInDown" data-wow-delay="200ms" data-wow-duration="1000ms"
+              id="btn-icon-print">Download The ICON Method Blueprint
+              <i class="fa-regular fa-circle-arrow-right ml-10"></i></a> -->
+
+            <a href="#" class="btn-one wow fadeInDown" data-wow-delay="200ms" data-wow-duration="1000ms"
+              id="btn-icon-print">Download The ICON Method Blueprint
               <i class="fa-regular fa-circle-arrow-right ml-10"></i></a>
             <!-- Trigger Link -->
+
+            <div id="iconBlueprintModal" class="icon-modal-overlay">
+              <div class="icon-modal-content">
+                <span class="icon-modal-close"
+                  onclick="document.getElementById('iconBlueprintModal').style.display='none'">&times;</span>
+                <img src="assets/images/offer/The-ICON-Method-Blueprint.jpg" alt="ICON Method Blueprint">
+                <h2>Download the ICON Method Blueprint</h2>
+                <p>Your guide to building a brand that performs, scales, and leads.</p>
+                <!-- <a href="assets/downloads/icon-method-blueprint.pdf" class="icon-modal-button" download>Download PDF</a> -->
+                <script src="https://js-na2.hsforms.net/forms/embed/242365592.js" defer></script>
+                <div class="hs-form-frame" data-region="na2" data-form-id="8107df2e-67a0-4411-8a5b-5ba11c7f6924"
+                  data-portal-id="242365592"></div>
+              </div>
+            </div>
             <a id="watchIntroBtn" class="link-watch wow fadeInLeft" data-wow-delay="0.2s">
               <i class="fa fa-play-circle" aria-hidden="true" id="btn-watch-intro"></i> Watch Intro
             </a>
@@ -1047,6 +1065,25 @@
       if (el.textContent.includes('Marketi')) {
         el.textContent = 'Satisfied clients of Abstract Creative';
       }
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const triggerBtn = document.getElementById('btn-icon-print');
+      const modal = document.getElementById('iconBlueprintModal');
+
+      if (triggerBtn && modal) {
+        triggerBtn.addEventListener('click', function (e) {
+          e.preventDefault();
+          modal.style.display = 'flex';
+        });
+      }
+
+      window.onclick = function (event) {
+        if (event.target === modal) {
+          modal.style.display = 'none';
+        }
+      };
     });
   </script>
 </body>
