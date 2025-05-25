@@ -254,8 +254,8 @@
                                 paid media running.</label>
                         </div>
 
-                        <button class="btn-one wow fadeInDown mt-20" data-wow-delay="200ms" data-wow-duration="1000ms"
-                            type="button" onclick="calculateResult()">See My Tier</button>
+                        <button class="btn-one wow fadeInDown mt-20 mb-20" data-wow-delay="200ms"
+                            data-wow-duration="1000ms" type="button" onclick="calculateResult()">See My Tier</button>
                     </form>
                     <div id="result"></div>
                 </div>
@@ -392,6 +392,14 @@
             const goal = form["goal"].value;
             const system = form["system"].value;
 
+            if (!stage || !goal || !system) {
+                document.getElementById("result").innerHTML = `
+                <h3>Incomplete Submission</h3>
+                <p>Please answer all questions to receive your recommended tier.</p>
+            `;
+                return;
+            }
+
             const scores = { foundation: 0, pro: 0, market: 0 };
             scores[stage]++;
             scores[goal]++;
@@ -414,10 +422,11 @@
             document.getElementById("result").innerHTML = `
             <h3>Your Recommended Tier:</h3>
             <p>${tierDescriptions[highest]}</p>
-            <button style="margin-top:10px;" onclick="location.href='${tierLinks[highest]}'">Explore This Tier</button>
-          `;
+            <button style="margin-top:10px;" class="btn-one wow fadeInDown mt-20" onclick="location.href='${tierLinks[highest]}'">Explore This Tier</button>
+        `;
         }
     </script>
+
 
 </body>
 
