@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ICON Method Pricing Calculator</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f7f7f7;
+      padding: 40px;
+      color: #112B32;
+    }
+
+    .calculator {
+      max-width: 550px;
+      margin: auto;
+      padding: 30px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      color: #EF4237;
+      text-align: center;
+    }
+
+    label {
+      display: block;
+      margin-top: 20px;
+      font-weight: bold;
+    }
+
+    select, input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+
+    .addons {
+      margin-top: 20px;
+    }
+
+    .addons label {
+      display: flex;
+      justify-content: space-between;
+      font-weight: normal;
+      padding: 6px 0;
+    }
+
+    .result {
+      margin-top: 30px;
+      font-size: 22px;
+      font-weight: bold;
+      color: #183C44;
+      text-align: center;
+    }
+
+    .note {
+      font-size: 14px;
+      color: #454445;
+      text-align: center;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="calculator">
+    <h2>ICON Method Pricing Calculator</h2>
+
+    <label for="tier">Choose Service Tier:</label>
+    <select id="tier">
+      <option value="foundation">Foundation</option>
+      <option value="pro">Pro Growth</option>
+      <option value="authority">Market Authority</option>
+    </select>
+
+    <label for="teamSize">Team Size (including you):</label>
+    <input type="number" id="teamSize" value="1" min="1">
+
+    <div class="addons">
+      <label><span>Brand Video Storytelling</span><input type="checkbox" class="addon" data-price="2500"></label>
+      <label><span>Landing Page Design</span><input type="checkbox" class="addon" data-price="1200"></label>
+      <label><span>Workshop Facilitation</span><input type="checkbox" class="addon" data-price="3500"></label>
+      <label><span>Social Media Playbook + Templates</span><input type="checkbox" class="addon" data-price="950"></label>
+    </div>
+
+    <div class="result" id="priceResult">$0</div>
+    <div class="note">Pricing is estimated and customizable based on project scope.</div>
+  </div>
+
+  <script>
+    const tierSelect = document.getElementById('tier');
+    const teamInput = document.getElementById('teamSize');
+    const resultDisplay = document.getElementById('priceResult');
+    const addonCheckboxes = document.querySelectorAll('.addon');
+
+    function calculatePrice() {
+      const tier = tierSelect.value;
+      const teamSize = parseInt(teamInput.value);
+      let base = 0;
+      let perPerson = 0;
+
+      switch(tier) {
+        case 'foundation':
+          base = 6500;
+          perPerson = 500;
+          break;
+        case 'pro':
+          base = 12000;
+          perPerson = 750;
+          break;
+        case 'authority':
+          base = 4000;
+          perPerson = 500;
+          break;
+      }
+
+      const additionalPeople = Math.max(teamSize - 1, 0);
+      let total = base + (perPerson * additionalPeople);
+
+      addonCheckboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+          total += parseInt(checkbox.dataset.price);
+        }
+      });
+
+      const formatted = tier === 'authority' ? `$${total.toLocaleString()}/month` : `$${total.toLocaleString()}`;
+      resultDisplay.textContent = formatted;
+    }
+
+    tierSelect.addEventListener('change', calculatePrice);
+    teamInput.addEventListener('input', calculatePrice);
+    addonCheckboxes.forEach(cb => cb.addEventListener('change', calculatePrice));
+
+    window.onload = calculatePrice;
+  </script>
+
+</body>
+</html>
