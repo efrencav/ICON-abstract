@@ -5339,3 +5339,69 @@ blockquote footer {
     margin-top: 20px;
   }
 }
+
+/* ICON Blueprint Modal */
+.icon-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.icon-modal-content {
+  background: #fff;
+  padding: 40px;
+  max-width: 600px;
+  width: 90%;
+  border-radius: 16px;
+  text-align: center;
+  position: relative;
+}
+
+.icon-modal-content img {
+  max-width: 120px;
+  margin-bottom: 20px;
+}
+
+.icon-modal-content h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #112B32;
+}
+
+.icon-modal-content p {
+  font-size: 16px;
+  margin-bottom: 20px;
+  color: #020D0A;
+}
+
+.icon-modal-close {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  color: #000;
+}
+
+.icon-modal-button {
+  background-color: #EF4237;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 8px;
+  display: inline-block;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+.hsfc-Step__Banner {
+  height: 0px !important;
+  border-top-left-radius: var(--hsf-background-banner__border-top-left-radius, var(--hsf-default-background-banner__border-top-left-radius));
+  border-top-right-radius: var(--hsf-background-banner__border-top-right-radius, var(--hsf-default-background-banner__border-top-right-radius));
+}
