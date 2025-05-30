@@ -543,6 +543,23 @@
     <script src="../assets/js/jquery.waypoints.js"></script>
     <!-- Script Js -->
     <script src="../assets/js/script.js"></script>
+
+    <script>
+        document.getElementById("openMeetingPopup").addEventListener("click", function () {
+            document.getElementById("meetingModal").style.display = "flex";
+        });
+
+        document.getElementById("closeMeetingPopup").addEventListener("click", function () {
+            document.getElementById("meetingModal").style.display = "none";
+        });
+
+        // Optional: close on ESC
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape") {
+                document.getElementById("meetingModal").style.display = "none";
+            }
+        });
+    </script>
 </body>
 
 </html>
