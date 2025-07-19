@@ -5410,3 +5410,47 @@ blockquote footer {
   border-top-left-radius: var(--hsf-background-banner__border-top-left-radius, var(--hsf-default-background-banner__border-top-left-radius));
   border-top-right-radius: var(--hsf-background-banner__border-top-right-radius, var(--hsf-default-background-banner__border-top-right-radius));
 }
+
+.icon-intro {
+  overflow: visible;
+  /* Ensures children can break out */
+  position: relative;
+}
+
+.image-absolute-overlap {
+  position: absolute;
+  top: -120px;
+  /* Adjust as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  /* Adjust as needed */
+  display: flex;
+  justify-content: center;
+  z-index: 10;
+}
+
+.image-absolute-overlap img {
+  max-width: 100%;
+  height: auto;
+  /* box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12); */
+}
+
+.icon-below-heading {
+  margin-top: 300px;
+  /* Adjust this so the heading sits below the image's lower edge */
+  text-align: center;
+}
+
+.icon-img {
+  display: block;
+  margin: auto;
+  width: 30%;
+  padding-bottom: 40px;
+}
+
+.logo-icon-brand {
+  display: block;
+  width: 500px;
+  padding-bottom: 20px;
+}
