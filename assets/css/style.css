@@ -5454,3 +5454,118 @@ blockquote footer {
   width: 500px;
   padding-bottom: 20px;
 }
+
+/* pain points */
+.pp-grid {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+@media (min-width: 992px) {
+  .pp-grid {
+    gap: 28px;
+  }
+}
+
+/* 2-up on mobile, 4-up on desktop */
+.pp-card {
+  grid-column: span 12;
+}
+
+@media (min-width: 576px) {
+  .pp-card {
+    grid-column: span 6;
+  }
+}
+
+@media (min-width: 1200px) {
+  .pp-card {
+    grid-column: span 3;
+  }
+}
+
+.pp-card {
+  position: relative;
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, .05);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.pp-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, .08);
+}
+
+/* Accent bar using your brand oranges */
+.pp-accent {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  border-radius: 16px 16px 0 0;
+  background: linear-gradient(90deg, #d13833 0%, #ef4237 40%, #ed7b39 75%, #f0ad1e 100%);
+}
+
+.pp-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.pp-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #F7F7F7;
+  color: #112B32;
+  font-size: 18px;
+}
+
+.pp-head h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.2;
+  color: #112B32;
+}
+
+.pp-list {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0 0;
+}
+
+.pp-list li {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 0;
+  color: #183C44;
+}
+
+.pp-list i {
+  margin-top: 3px;
+  color: #d13833;
+}
+
+.pp-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  /* center the buttons */
+  text-align: center;
+  /* fallback for older layouts */
+}
+
+.pp-cta a {
+  margin: 0 6px;
+}
