@@ -51,9 +51,119 @@
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.0/gsap.min.js"></script> -->
   <!-- MotionPathPlugin -->
   <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.0.0/MotionPathPlugin.min.js"></script> -->
+
+  <!-- WOW.js + Animate.css init -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js" defer></script>
+
+  <!-- Respect reduced motion -->
+  <style>
+    @media (prefers-reduced-motion: reduce) {
+
+      .wow,
+      [data-animate] {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
+    /* Micro-interactions */
+    .btn-one,
+    .btn-three {
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+
+    .btn-one:hover,
+    .btn-three:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, .08);
+    }
+
+    .offer__item-two li {
+      transition: transform .25s ease, box-shadow .25s ease;
+    }
+
+    .offer__item-two li:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 30px rgba(0, 0, 0, .10);
+    }
+
+    /* Bullet 30% by default, 100% when active (you already use this pattern elsewhere) */
+    .process__item .process-item-top ul {
+      opacity: .3;
+      transition: opacity .25s ease;
+    }
+
+    .process__item.active .process-item-top ul {
+      opacity: 1;
+    }
+
+    /* Sticky header reveal */
+    .header-area {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: saturate(180%) blur(6px);
+      transition: transform .3s ease, background-color .3s ease;
+    }
+
+    .header--hidden {
+      transform: translateY(-100%);
+    }
+
+    .header--scrolled {
+      background-color: rgba(17, 43, 50, .85);
+    }
+
+    /* Top progress bar */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 0;
+      background: #EF4237;
+      z-index: 1500;
+    }
+
+    /* Logo marquee (if you add a row of logos later) */
+    .logos {
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .logos .track {
+      display: inline-block;
+      animation: marquee 30s linear infinite;
+    }
+
+    @keyframes marquee {
+      from {
+        transform: translateX(0)
+      }
+
+      to {
+        transform: translateX(-50%)
+      }
+    }
+
+    .svg-path {
+      stroke-dasharray: var(--len, 1000);
+      stroke-dashoffset: var(--len, 1000);
+      transition: stroke-dashoffset 1.2s ease;
+    }
+
+    .wow.animate__animated.animate__fadeInUp .svg-path,
+    .process-area .wow.animated .svg-path {
+      stroke-dashoffset: 0;
+    }
+  </style>
+
 </head>
 
 <body>
+  <div class="scroll-progress" aria-hidden="true"></div>
+
   <!-- Google Tag Manager (noscript) -->
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-P93WLQG" height="0" width="0"
       style="display:none;visibility:hidden"></iframe></noscript>
@@ -116,36 +226,36 @@
               </li>
               <li><a href="about.html">About</a></li>
               <li>
-                <a href="https://icon-method.com/">The ICON Method™ <i class="fa-solid fa-angle-down"></i></a>
+                <a href="./icon-method/index.html">The ICON Method™ <i class="fa-solid fa-angle-down"></i></a>
                 <ul class="sub-menu">
                   <li>
-                    <a href="https://icon-method.com/icon-method/identity">I — Identity</a>
+                    <a href="./icon-method/identity">I — Identity</a>
                   </li>
                   <li>
-                    <a href="https://icon-method.com/icon-method/communication">C — Communication</a>
+                    <a href="./icon-method/communication">C — Communication</a>
                   </li>
                   <li>
-                    <a href="https://icon-method.com/icon-method/optimization">O — Optimization</a>
+                    <a href="./icon-method/optimization">O — Optimization</a>
                   </li>
                   <li>
-                    <a href="https://icon-method.com/icon-method/navigation">N — Navigation</a>
+                    <a href="./icon-method/navigation">N — Navigation</a>
                   </li>
                 </ul>
               </li>
               <li>
-                <a href="https://iconbrandstudio.com/">The ICON Brand Studio™ <i class="fa-solid fa-angle-down"></i></a>
+                <a href="./services/index.html">Services<i class="fa-solid fa-angle-down"></i></a>
                 <ul class="sub-menu">
                   <li>
-                    <a href="https://iconbrandstudio.com/services/foundation">Foundation™ Tier</a>
+                    <a href="./services/foundation.html">Foundation™ Tier</a>
                   </li>
                   <li>
-                    <a href="https://iconbrandstudio.com/services/pro-growth">Pro Growth™ Tier</a>
+                    <a href="./services/pro-growth.html">Pro Growth™ Tier</a>
                   </li>
                   <li>
-                    <a href="https://iconbrandstudio.com/services/market-authority">Market Authority™ Tier</a>
+                    <a href="./services/market-authority.html">Market Authority™ Tier</a>
                   </li>
                   <li>
-                    <a href="https://iconbrandstudio.com/services/add-ons">Add-On Services</a>
+                    <a href="./services/add-ons.html">Add-On Services</a>
                   </li>
                 </ul>
               </li>
@@ -226,12 +336,12 @@
     </section>
     <!-- Banner area end here -->
     <!-- Download the ICON Method Blueprint -->
-<!--     <section class="icon-intro bg-image" data-background="./assets/images/bg/tier-bg.png"
+    <!-- <section class="icon-intro bg-image" data-background="./assets/images/bg/tier-bg.png"
       style="position: relative; padding: 60px 20px 20px 20px; background-color: #000;">
       <div class="container">
-        <div class="row" style="display: flex; flex-wrap: wrap; align-items: flex-start; text-align: left;">
-
-          <div class="column" style="flex: 1; min-width: 300px; padding: 20px; position: relative;">
+        <div class="row" style="display: flex; flex-wrap: wrap; align-items: flex-start; text-align: left;"> -->
+    <!-- Left Column -->
+    <!-- <div class="column" style="flex: 1; min-width: 300px; padding: 20px; position: relative;">
             <div class="icon-image-text-wrapper">
               <div class="image-absolute-overlap">
                 <img src="assets/images/offer/icon-method-tilted.png" alt="image" />
@@ -240,9 +350,10 @@
                 reposition
                 your brand for sustainable success.</p>
             </div>
-          </div>
+          </div> -->
 
-          <div class="column" style="flex: 1; min-width: 400px; padding: 20px;">
+    <!-- Right Column -->
+    <!-- <div class="column" style="flex: 1; min-width: 400px; padding: 20px;">
             <h3 class="text-white" data-wow-delay="200ms" data-wow-duration="1000ms">
               The ICON Method Blueprint eBook
             </h3>
@@ -282,8 +393,8 @@
             <a href="./landing-pages/Icon-method-blueprint.html" class="btn-one wow fadeInDown" data-wow-delay="200ms"
               data-wow-duration="1000ms">Download The ICON Method Blueprint
               <i class="fa-regular fa-circle-arrow-right ml-10"></i></a>
-          </div>
-        </div>
+          </div> -->
+    <!-- </div>
       </div>
     </section> -->
     <!-- Download the ICON Method Blueprint End -->
@@ -320,7 +431,7 @@
                   <!-- <a href="about.html" class="secondary-color fw-700 primary-hover">Read More</a> -->
                 </p>
                 <a href="https://iconbrandstudio.com/" class="explore-btn wow fadeInDown mt-40" data-wow-delay="400ms"
-                  data-wow-duration="1000ms" id="btn-explore-icon-studio"><span>Explore The ICON Brand Studio</span>
+                  data-wow-duration="1000ms" id="btn-explore-icon-studio"><span>Explore our Services</span>
                   <i class="fa-regular fa-arrow-right"></i></a>
               </div>
             </div>
@@ -335,9 +446,9 @@
       <div class="container">
         <div class="section-header mb-40">
           <div class="section-header">
-            <a href="https://icon-method.com" class="icon-img">
+            <!-- <a href="https://icon-method.com" class="icon-img">
               <img src="./assets/images/logo/abstract-ICON-Method.svg" alt="ICON Method logo" data-wow-delay="00ms"
-                data-wow-duration="1000ms" /></a>
+                data-wow-duration="1000ms" /></a> -->
             <h2 class="wow fadeInUp text-center" data-wow-delay="200ms" data-wow-duration="1000ms">
               Our <span>Proven Framework</span> for Strategic Brand Transformation
             </h2>
@@ -551,9 +662,8 @@
       <div class="container">
         <div class="section-header__wrp mb-60">
           <div class="section-header">
-            <a href="https://iconbrandstudio.com" class="logo-icon-brand">
-              <img src="./assets/images/logo/abstract-brand-studio-reversed.svg" alt="ICON Brand Studio logo"
-                data-wow-delay="00ms" data-wow-duration="1000ms" /></a>
+            <h5 class="wow fadeInUp" data-wow-delay="00ms" data-wow-duration="1000ms">Our Services</h5>
+
           </div>
           <p class="para-light-color wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1000ms">
             No matter where you’re at—starting fresh, scaling fast, or ready to lead—our tiered services give you the
@@ -565,7 +675,7 @@
         <div class="offer__item-two">
           <ul>
             <li class="wow fadeInDown" data-wow-delay="00ms" data-wow-duration="1000ms">
-              <a class="offer-title" href="https://iconbrandstudio.com/services/foundation">
+              <a class="offer-title" href="./services/foundation.html">
                 <strong>Foundation™ Tier</strong>
               </a>
               <p class="offer-description">Uncover your core identity, clarify your message, and design a brand system
@@ -573,7 +683,7 @@
               <i class="fa-light offer-icon fa-arrow-right"></i>
             </li>
             <li class="wow fadeInDown" data-wow-delay="100ms" data-wow-duration="1000ms">
-              <a class="offer-title" href="https://iconbrandstudio.com/services/pro-growth">
+              <a class="offer-title" href="./services/pro-growth.html">
                 <strong>Pro Growth™ Tier</strong>
               </a>
               <p class="offer-description">Build messaging that converts, funnels that perform, and systems that scale
@@ -581,7 +691,7 @@
               <i class="fa-light offer-icon fa-arrow-right"></i>
             </li>
             <li class="wow fadeInDown" data-wow-delay="200ms" data-wow-duration="1000ms">
-              <a class="offer-title" href="https://iconbrandstudio.com/services/market-authority">
+              <a class="offer-title" href="./services/market-authority.html">
                 <strong>Market Authority™ Tier</strong>
               </a>
               <p class="offer-description">Run strategic campaigns, optimize performance, and position your brand to
@@ -621,8 +731,8 @@
               Whether you're just starting out, scaling fast, or looking to dominate your market, the right path starts
               here.
             </p>
-            <a href="https://icon-abstract.netlify.app//quiz/icon_tier_quiz.html" class="btn-three wow fadeInDown"
-              data-wow-delay="200ms" data-wow-duration="1000ms" id="btn-icon-print">
+            <a href="./quiz/icon_tier_quiz.html" class="btn-three wow fadeInDown" data-wow-delay="200ms"
+              data-wow-duration="1000ms" id="btn-icon-print">
               Take the Tier Quiz Now <i class="fa-regular fa-circle-arrow-right ml-10"></i>
             </a>
           </div>
@@ -716,8 +826,7 @@
                   Brands That <span>Transformed</span> with The ICON Method.
                 </h2>
                 <p class="wow fadeInUp" data-wow-delay="400ms" data-wow-duration="1000ms">
-                  Every brand that enters The ICON Brand Studio leaves with clarity, confidence, and systems that drive
-                  growth.
+                  Every brand that engages our Services leaves with clarity, confidence, and systems that drive growth.
                 </p>
               </div>
               <div class="testimonial-user d-flex gap-2 flex-wrap pt-30 bor-top mt-30 wow fadeInDown"
@@ -785,7 +894,7 @@
                   <div class="testimonial__right-item">
                     <p>
                       "We finally stopped guessing—and started scaling.
-                      I’ve worked with agencies before, but this was different. The ICON Brand Studio™ didn’t just give
+                      I’ve worked with agencies before, but this was different. The ICON Method™ didn’t just give
                       us deliverables—it gave us direction. Our new positioning landed us a national partnership."
                     </p>
                     <div class="testimonial-info">
@@ -864,56 +973,73 @@
           <div class="tab-pane fade show active" id="tab-content1">
             <div class="swiper faq__slider">
               <div class="swiper-wrapper">
+
                 <div class="swiper-slide">
                   <div class="faq__item mb-20">
                     <h3 class="mb-10">What is the ICON Method?</h3>
-                    <p>The ICON Method is Abstract Creative’s proprietary 4-phase transformation framework:<a
-                        href="https://icon-method.com/icon-method/identity">Identity</a>,
-                      <a href="https://icon-method.com/icon-method/communication">Communication</a>, <a
-                        href="https://icon-method.com/icon-method/optimization">Optimization</a>, and <a
-                        href="https://icon-method.com/icon-method/navigation">Navigation</a>. It
-                      aligns your brand’s strategy, systems, and
-                      execution for scalable success.
+                    <p>
+                      The ICON Method is Abstract Creative’s proprietary four phase transformation framework:
+                      <a href="./icon-method/identity.html">Identity</a>,
+                      <a href="./icon-method/communication.html">Communication</a>,
+                      <a href="./icon-method/optimization.html">Optimization</a>, and
+                      <a href="./icon-method/navigation.html">Navigation</a>.
+                      It aligns your brand’s strategy, systems, and execution for scalable growth.
                     </p>
                   </div>
+
                   <div class="faq__item mb-20">
-                    <h3 class="mb-10">How does the ICON Brand Studio differ from the ICON Method?</h3>
-                    <p>The ICON Brand Studio is the service program powered by the ICON Method. It offers three
-                      strategic tiers—<a href="https://iconbrandstudio.com/services/foundation">Foundation</a>, <a
-                        href="https://iconbrandstudio.com/services/pro-growth">Pro Growth</a>, and <a
-                        href="https://iconbrandstudio.com/services/market-authority">Market Authority</a>—that apply
-                      the method based on
-                      your business’s current stage and goals.</p>
+                    <h3 class="mb-10">How do Services work with the ICON Method?</h3>
+                    <p>
+                      Services is the execution program powered by the ICON Method. It offers three strategic tiers:
+                      <a href="./services/foundation.html">Foundation</a>,
+                      <a href="./services/pro-growth.html">Pro Growth</a>, and
+                      <a href="./services/market-authority.html">Market Authority</a>.
+                      We apply the method based on your stage and goals.
+                    </p>
                   </div>
                 </div>
+
                 <div class="swiper-slide">
                   <div class="faq__item mb-20">
-                    <h3 class="mb-10">What deliverables are included in the ICON Brand Studio?</h3>
-                    <p>Deliverables vary by tier and may include brand strategy, identity design, messaging guides, web
-                      and funnel copy, CRM setup, automation workflows, SEO, and performance dashboards.</p>
+                    <h3 class="mb-10">What deliverables are included in Services?</h3>
+                    <p>
+                      Deliverables vary by tier and may include brand strategy, identity design, messaging guides,
+                      website and funnel copy, CRM setup, automation workflows, SEO, and performance dashboards.
+                    </p>
                   </div>
+
                   <div class="faq__item mb-20">
                     <h3 class="mb-10">Do I need to start at the Foundation Tier?</h3>
-                    <p>Yes. All clients begin with Identity. This ensures your brand’s DNA, positioning, and audience
-                      are crystal clear before moving into conversion-focused execution or scale strategies.</p>
+                    <p>
+                      Yes. All clients begin with Identity. This ensures your brand’s DNA, positioning, and audience are
+                      clear
+                      before moving into conversion work or scaling strategies.
+                    </p>
                   </div>
                 </div>
+
                 <div class="swiper-slide">
                   <div class="faq__item mb-20">
                     <h3 class="mb-10">How long does a full transformation take?</h3>
                     <ul>
-                      <li>Foundation: 4–6 weeks</li>
-                      <li>Pro Growth: 6–10 weeks</li>
-                      <li>Market Authority: 3–6 months</li>
+                      <li>Foundation: 4 to 6 weeks</li>
+                      <li>Pro Growth: 6 to 10 weeks</li>
+                      <li>Market Authority: 3 to 6 months</li>
                     </ul>
                   </div>
+
                   <div class="faq__item mb-20">
                     <h3 class="mb-10">Who is this for?</h3>
-                    <p>Visionary entrepreneurs, service providers, and growth-stage businesses ready to scale with
-                      strategy, clarity, and infrastructure.</p>
+                    <p>
+                      Visionary entrepreneurs, service providers, and growth stage businesses ready to scale with
+                      strategy,
+                      clarity, and the right infrastructure.
+                    </p>
                   </div>
                 </div>
+
               </div>
+
               <div class="faq__slider-info">
                 <span class="line-text">General Questions</span>
                 <div class="line"></div>
@@ -922,10 +1048,8 @@
                   <button class="faq__arry-next active"><i class="fa-regular fa-arrow-right-long"></i></button>
                 </div>
               </div>
+
             </div>
-          </div>
-        </div>
-      </div>
     </section>
     <!-- Faq area end here -->
 
@@ -998,10 +1122,10 @@
                     <a href="./about.html">About</a>
                   </li>
                   <li>
-                    <a href="https://icon-method.com">The ICON Method</a>
+                    <a href="./icon-method/index.html">The ICON Method</a>
                   </li>
                   <li>
-                    <a href="https://iconbrandstudio.com">The ICON Brand Studio</a>
+                    <a href="./services/index.html">Services</a>
                   </li>
                 </ul>
               </div>
@@ -1045,27 +1169,27 @@
     <div class="footer__copytext footer__copy">
       <p class="wow fadeInDown" data-wow-delay="400ms" data-wow-duration="1000ms">
         &copy; 2017–2025 <a href="index.html" class="primary-hover">Abstract Creative</a>, LLC. All rights reserved.
-        The ICON Method™, The ICON Brand Studio™, Foundation™, Pro Growth™, and Market Authority™ are
+        The ICON Method™, Foundation™, Pro Growth™, and Market Authority™ are
         proprietary trademarks of Abstract Creative, pending registration.
       </p>
     </div>
   </footer>
   <!-- Footer area end here -->
 
-  <div id="iconBlueprintModal" class="icon-modal-overlay">
+  <!-- <div id="iconBlueprintModal" class="icon-modal-overlay">
     <div class="icon-modal-content">
       <span class="icon-modal-close"
         onclick="document.getElementById('iconBlueprintModal').style.display='none'">&times;</span>
       <img src="assets/images/offer/The-ICON-Method-Blueprint.jpg"
         alt="ICON Method Blueprint document for brand transformation">
       <h2>Download the ICON Method Blueprint</h2>
-      <p>Your guide to building a brand that performs, scales, and leads.</p>
-      <!-- <a href="assets/downloads/icon-method-blueprint.pdf" class="icon-modal-button" download>Download PDF</a> -->
-      <script src="https://js-na2.hsforms.net/forms/embed/242365592.js" defer></script>
+      <p>Your guide to building a brand that performs, scales, and leads.</p> -->
+  <!-- <a href="assets/downloads/icon-method-blueprint.pdf" class="icon-modal-button" download>Download PDF</a> -->
+  <!-- <script src="https://js-na2.hsforms.net/forms/embed/242365592.js" defer></script>
       <div class="hs-form-frame" data-region="na2" data-form-id="8107df2e-67a0-4411-8a5b-5ba11c7f6924"
         data-portal-id="242365592"></div>
     </div>
-  </div>
+  </div> -->
   <!-- Modal Structure -->
   <div id="videoModal" class="modal">
     <div class="modal-content">
@@ -1157,6 +1281,78 @@
       };
     });
   </script>
+  <script>
+    // WOW init
+    document.addEventListener('DOMContentLoaded', function () {
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.WOW) {
+        new WOW({ offset: 80, mobile: true, live: false }).init();
+      }
+    });
+
+    // Sticky header show/hide and progress bar
+    (function () {
+      const header = document.querySelector('.header-area');
+      const bar = document.querySelector('.scroll-progress');
+      let lastY = window.scrollY;
+      const onScroll = () => {
+        const y = window.scrollY;
+        // header hide on scroll down, show on scroll up
+        if (y > lastY && y > 120) header.classList.add('header--hidden');
+        else header.classList.remove('header--hidden');
+        // add background when scrolled
+        if (y > 10) header.classList.add('header--scrolled');
+        else header.classList.remove('header--scrolled');
+        // progress
+        const docH = document.documentElement.scrollHeight - window.innerHeight;
+        const p = docH > 0 ? (y / docH) * 100 : 0;
+        if (bar) bar.style.width = p + '%';
+        lastY = y;
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // Make process cards set "active" on hover/click to reveal 100% bullets
+    (function () {
+      const cards = document.querySelectorAll('.process__item');
+      if (!cards.length) return;
+      const setActive = (el) => {
+        cards.forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+      };
+      cards.forEach(c => {
+        c.addEventListener('mouseenter', () => setActive(c));
+        c.addEventListener('click', () => setActive(c));
+      });
+      // activate first by default
+      setActive(cards[0]);
+    })();
+
+    // Simple count-up utility for any element with data-count="1234"
+    (function () {
+      const els = document.querySelectorAll('[data-count]');
+      if (!els.length) return;
+      const io = new IntersectionObserver((entries, obs) => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          const el = e.target;
+          const end = +el.dataset.count || 0;
+          const start = 0;
+          const dur = 900;
+          const t0 = performance.now();
+          function step(t) {
+            const p = Math.min((t - t0) / dur, 1);
+            el.textContent = Math.floor(start + (end - start) * p).toLocaleString();
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+          obs.unobserve(el);
+        });
+      }, { threshold: .6 });
+      els.forEach(el => io.observe(el));
+    })();
+  </script>
+
 </body>
 
 </html>
