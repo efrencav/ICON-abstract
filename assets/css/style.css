@@ -5569,3 +5569,23 @@ blockquote footer {
 .pp-cta a {
   margin: 0 6px;
 }
+
+/* Light background for the section */
+.painpoints-area {
+  background: #F7F7F7;
+  /* Light Grey */
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+}
+
+/* Keep cards crisp on the light background */
+.painpoints-area .pp-card {
+  background: #fff;
+  border: 1px solid #e9e9e9;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .04);
+}
+
+/* Optional beige variant */
+.painpoints-area.bg-beige {
+  background: #E5D8CE;
+}
