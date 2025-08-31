@@ -36,9 +36,9 @@ CSS TABLE OF CONTENTS
 
 :root {
   --primary-color: #ef4237;
-  --primary-two: #112b32;
+  --primary-two: #00666a;
   --secondary-color: #183c44;
-  --sub-bg: #124e5205;
+  --sub-bg: #004853;
   --sub-bg-two: #1b575b03;
   --heading-color: #1c1a1d;
   --paragraph: #020d0ab2;
@@ -2817,12 +2817,12 @@ input {
 
 .banner-inner-area {
   overflow: hidden;
-  background-color: #1b575b;
+  background-color: #00666a;
 }
 
 .banner-inner-area-two {
   overflow: hidden;
-  background-color: #112b32;
+  background-color: #004853;
 }
 
 .banner-inner-area-three {
