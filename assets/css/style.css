@@ -5540,21 +5540,30 @@ blockquote footer {
 .pp-list {
   list-style: none;
   padding: 0;
-  margin: 12px 0 0 0;
+  margin: 10px 0 0 0;
 }
 
 .pp-list li {
-  display: flex;
-  gap: 10px;
-  align-items: flex-start;
-  padding: 8px 0;
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  /* icon + text */
+  column-gap: 10px;
+  align-items: start;
+  /* anchor to top line */
+  padding: 5px 0;
   color: #183C44;
+  line-height: normal;
 }
 
 .pp-list i {
-  margin-top: 3px;
+  justify-self: center;
+  line-height: 1;
+  position: relative;
+  top: -2px;
+  /* nudge UP; tweak as needed */
   color: #d13833;
 }
+
 
 .pp-cta {
   display: flex;
