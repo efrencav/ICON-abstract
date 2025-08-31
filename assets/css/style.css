@@ -2448,7 +2448,7 @@ input {
 
 .header__main .main-menu ul li a {
   font-weight: 600;
-  padding: 30px 0;
+  padding: 30px 10px;
 }
 
 .header__main .main-menu ul li a i {
@@ -5566,16 +5566,12 @@ blockquote footer {
   /* fallback for older layouts */
 }
 
-.pp-cta a {
-  margin: 0 6px;
-}
-
-/* Light background for the section */
-.painpoints-area {
-  background: #F7F7F7;
-  /* Light Grey */
-  border-top: 1px solid #eee;
-  border-bottom: 1px solid #eee;
+.painpoints-area .pp-cta {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
 }
 
 /* Keep cards crisp on the light background */
@@ -5585,7 +5581,130 @@ blockquote footer {
   box-shadow: 0 6px 18px rgba(0, 0, 0, .04);
 }
 
+
 /* Optional beige variant */
 .painpoints-area.bg-beige {
   background: #E5D8CE;
+}
+
+:root {
+  /* Set by JS; these are fallbacks */
+  --header-height: 80px;
+  --subnav-height: 56px;
+  --subnav-offset: 2px;
+  /* pushes subnav up by 2px */
+}
+
+/* Fixed subnav, hidden until scrolled past header */
+.subnav {
+  position: fixed;
+  top: calc(var(--header-height) - var(--subnav-offset));
+  left: 0;
+  right: 0;
+  z-index: 1001;
+  /* header is 1000; progress bar is 1500 */
+  background: #F2F5F6;
+  border-bottom: 1px solid #e6e6e6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, .05);
+  transform: translateY(-120%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .25s ease, opacity .2s ease, background-color .2s ease;
+}
+
+.subnav.is-visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Anchor landing offset accounts for header + subnav + 2px push-up */
+section[id] {
+  scroll-margin-top: calc(var(--header-height) + var(--subnav-height) - var(--subnav-offset) + 12px);
+}
+
+/* Layout */
+.subnav .container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* center the bar */
+  min-height: 56px;
+}
+
+.subnav__list {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  justify-content: center;
+  /* center the items */
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.subnav__list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Optional: left-align on small screens */
+@media (max-width: 768px) {
+  .subnav__list {
+    justify-content: flex-start;
+  }
+}
+
+/* Links - base padding set so hover/active do not shift text */
+.subnav__list a {
+  display: inline-flex;
+  align-items: center;
+  height: 37px;
+  padding: 0 18px;
+  /* fixed padding (no bounce) */
+  color: #112B32;
+  text-decoration: none;
+  font-weight: 600;
+  border-radius: 8px;
+  white-space: nowrap;
+  transition:
+    background-color .2s ease,
+    color .2s ease,
+    transform .1s ease,
+    box-shadow .1s ease;
+}
+
+/* Hover: solid orange + white text */
+.subnav__list a:hover:not(.is-active) {
+  background-color: #ef4237;
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(239, 66, 55, .18);
+}
+
+/* Active: solid orange + white text (same padding as base) */
+.subnav__list a.is-active,
+.subnav__list a.is-active:visited {
+  background-color: #ef4237;
+  color: #fff !important;
+  box-shadow: 0 6px 18px rgba(239, 66, 55, .18);
+}
+
+/* Press + focus */
+.subnav__list a:active {
+  transform: translateY(-1px);
+}
+
+.subnav__list a:focus-visible {
+  outline: 2px solid #ef4237;
+  outline-offset: 2px;
+}
+
+/* Ensure icons/SVGs inherit text color */
+.subnav__list a i,
+.subnav__list a svg {
+  color: currentColor;
+  fill: currentColor;
+  stroke: currentColor;
 }
