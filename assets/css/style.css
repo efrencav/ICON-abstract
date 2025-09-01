@@ -3280,7 +3280,7 @@ input {
 }
 
 .service-details__left-item .item {
-  background-color: var(--sub-bg);
+  /* background-color: var(--sub-bg); */
   padding: 40px;
   border-radius: 16px;
   border: var(--border-1px);
