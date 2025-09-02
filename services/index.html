@@ -293,41 +293,7 @@
                                         data-wow-duration="1000ms" type="button">
                                         Unlock Pricing<i class="fa-regular fa-arrow-right ml-10"></i>
                                     </button>
-                                    <!-- Modal -->
-                                    <div aria-hidden="true" aria-labelledby="pricingModalLabel" class="modal fade"
-                                        id="pricingModal" tabindex="-1">
-                                        <div class="modal-dialog modal-lg modal-dialog-centered">
-                                            <div class="modal-content p-4">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title">Access Full Pricing Details</h5>
-                                                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal"
-                                                        type="button"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div id="hubspot-pricing-form"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Scripts -->
-                                    <script src="https://js.hsforms.net/forms/embed/v2.js"></script>
-                                    <script>
-                                        let formInitialized = false;
-                                        const modal = document.getElementById('pricingModal');
-                                        modal.addEventListener('shown.bs.modal', function () {
-                                            if (!formInitialized) {
-                                                hbspt.forms.create({
-                                                    region: "na2",
-                                                    portalId: "242365592",
-                                                    formId: "8fbffd0d-ee9c-4794-a7ec-da33db2110e2",
-                                                    target: "#hubspot-pricing-form"
-                                                });
-                                                formInitialized = true;
-                                            }
-                                        });
-                                    </script>
                                 </div>
-
                                 <div class="col-12 col-lg-4 choose__content mt-60">
                                     <h6>Key Deliverables:</h6>
                                     <ul>
@@ -873,6 +839,38 @@
             onScroll();
         })();
     </script>
+    <!-- Modal -->
+    <div aria-hidden="true" aria-labelledby="pricingModalLabel" class="modal fade" id="pricingModal" tabindex="-1">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content p-4">
+                <div class="modal-header">
+                    <h5 class="modal-title">Access Full Pricing Details</h5>
+                    <button aria-label="Close" class="btn-close" data-bs-dismiss="modal" type="button"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="hubspot-pricing-form"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Scripts -->
+    <script src="https://js.hsforms.net/forms/embed/v2.js"></script>
+    <script>
+        let formInitialized = false;
+        const modal = document.getElementById('pricingModal');
+        modal.addEventListener('shown.bs.modal', function () {
+            if (!formInitialized) {
+                hbspt.forms.create({
+                    region: "na2",
+                    portalId: "242365592",
+                    formId: "8fbffd0d-ee9c-4794-a7ec-da33db2110e2",
+                    target: "#hubspot-pricing-form"
+                });
+                formInitialized = true;
+            }
+        });
+    </script>
+
 </body>
 
 </html>
