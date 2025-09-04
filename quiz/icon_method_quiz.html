@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>ICON Method – Assessment Wizard</title>
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css"/>
+  <link rel="stylesheet" href="../assets/css/style.css"/>
+  <style>
+    :root{ --im-sticky-top: 80px; }
+    body{background:#0f1417;color:#fff}
+    .im-error{display:none;border:1px solid #ffb4a5;background:#fff3f1;color:#8a1f11;padding:12px;border-radius:10px}
+    .im-error[aria-hidden="false"]{display:block}
+    .im-chip{display:inline-flex;align-items:center;gap:.5rem;border-radius:999px;padding:.5rem .75rem;font-weight:700;border:1px solid #e6e6e6;background:#fff;color:#0d1b22;cursor:pointer}
+    .im-chip[aria-pressed="true"]{color:#fff;border-color:transparent}
+    .im-yes{background:#e9f7f0;color:#156b45;border-color:#bde5d1}
+    .im-yes[aria-pressed="true"]{background:#22a06b}
+    .im-no{background:#fff1ef;color:#8a1f11;border-color:#ffd4cc}
+    .im-no[aria-pressed="true"]{background:#ef4237}
+    .im-item{display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:.75rem;border:1px solid #e6e6e6;border-radius:12px;background:#f7f7f8}
+    .im-item-title{font-size:14px;color:#0d1b22}
+    .im-items{display:grid;gap:12px;grid-template-columns:1fr}
+    .im-bar{height:18px;background:#f1f1f1;border-radius:999px;overflow:hidden}
+    .im-bar>span{display:block;height:100%;border-radius:999px}
+    @media (min-width: 992px){ .im-sticky{ position:-webkit-sticky; position:sticky; top:var(--im-sticky-top); z-index:20; } }
+      .im-missing{ border-left:4px solid #ef4237; background:#fff3f1; color:#0d1b22; }
+    .im-available{ opacity:.75; }
+      /* Donut progress styles */
+    .im-donut-wrap{display:flex;gap:16px;align-items:center}
+    .im-donut-svg{width:220px;height:220px;flex:0 0 auto}
+    .im-donut-center{font-family:inherit;text-anchor:middle;dominant-baseline:middle}
+    .im-donut-overall{font-weight:800;font-size:44px;}
+    .im-legend{display:grid;gap:10px}
+    .im-legend-item{line-height:1.1}
+    .im-legend-item .pct{font-weight:800;font-size:28px;color:#222;margin-right:8px}
+    .im-legend-item .label{font-weight:800}
+    .im-legend-item .sub{color:#6b7280;font-size:12px;margin-top:2px}
+  </style>
+</head>
+<body>
+  <section class="pt-120 pb-60 beige-background">
+    <div class="container">
+      <div class="section-header-two v2 text-center">
+        <h5>The ICON Method™</h5>
+        <h1 class="section-title">Assessment Wizard</h1>
+        <p class="mt-20">Answer each item Yes/No. Navigate phase-by-phase. The sidebar updates live.</p>
+        <div class="mt-4 d-flex justify-content-center gap-3">
+          <a href="#im-checklist" class="btn-two">Start</a>
+          <button id="imReset" class="btn-three">Reset</button>
+          <button id="imCsv" class="btn-three">Download CSV</button>
+        </div>
+        <div id="imErr" class="im-error mt-3" aria-hidden="true"></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="im-checklist" class="pt-60 pb-120 beige-background">
+    <div class="container">
+      <div class="row g-4">
+        <div class="col-12 col-lg-8">
+          <div id="imWizard"></div>
+          <div id="imResults" class="mt-4"></div>
+        </div>
+        <div class="col-12 col-lg-4 align-self-start im-sticky">
+          <div class="bg-white rounded-4 shadow-sm border-0 p-4">
+            <div id="imRec" class="bg-light rounded-4 p-3 mb-3" style="display:none"></div>
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <h3 class="h5 m-0 text-dark">Phase Readiness</h3>
+              <div class="text-muted small">Overall: <strong id="imOverall">—</strong></div>
+            </div>
+            <div id="imMeters" class="d-grid gap-3 mt-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script>
+(function(){
+  'use strict';
+  if (window.__ICON_WIZARD_INIT__) return; window.__ICON_WIZARD_INIT__ = true;
+  function fail(e){ var el=document.getElementById('imErr'); if(el){ el.setAttribute('aria-hidden','false'); el.textContent='Initialization error: '+(e&&e.message?e.message:String(e)); } console.error(e); }
+
+  // ----- Data -----
+  var phases=[
+    {key:'identity',title:'I — Identity',items:[
+      'Do you have a clear Vision, Mission, and Values documented and used to guide decisions?',
+      'Have you defined a Brand Positioning Map that sets you apart from competitors?',
+      'Do you know exactly who your audience personas are (needs, pain points, behaviors)?',
+      'Does your brand have a consistent Voice & Tone guide that your team follows?',
+      'Do you have a complete Visual Identity System (logo, colors, typography, guidelines)?'
+    ]},
+    {key:'communication',title:'C — Communication',items:[
+      'Do you have a Messaging Playbook that aligns with your brand strategy?',
+      'Is your website copy clear, persuasive, and consistent with your brand voice?',
+      'Do you use funnel copy (emails, landing pages) that converts leads effectively?',
+      'Is your content storytelling framework mapped out (brand story, customer story, proof)?',
+      'Do you have a Social Content Messaging Guide for consistency across platforms?'
+    ]},
+    {key:'optimization',title:'O — Optimization',items:[
+      'Do you have a user-friendly website wireframe and UX design mapped out?',
+      'Have you integrated a CRM (like HubSpot) to manage leads and clients?',
+      'Do you run automated email sequences and lead magnets to capture and nurture leads?',
+      'Is your website optimized for SEO and mobile?',
+      'Do you track performance with Google Analytics or similar analytics tools?'
+    ]},
+    {key:'navigation',title:'N — Navigation',items:[
+      'Do you run paid ad campaigns on Meta, Google, or LinkedIn to reach your audience?',
+      'Do you regularly use A/B testing to improve conversions?',
+      'Do you have a retargeting system in place for leads who do not convert right away?',
+      'Do you execute Authority Campaigns (webinars, thought leadership, PR)?',
+      'Do you track progress with a KPI dashboard and review results monthly?'
+    ]}
+  ];
+
+  var phaseColors={identity:'#d13833',communication:'#ef4237',optimization:'#ed7b39',navigation:'#f0ad1e'};
+
+  // Map questionnaire items to keys for results highlighting
+  var indexMap={
+    vmv:{phase:'identity',index:0}, positioning:{phase:'identity',index:1}, personas:{phase:'identity',index:2}, voice:{phase:'identity',index:3}, visual_id:{phase:'identity',index:4},
+    messaging_playbook:{phase:'communication',index:0}, website_copy:{phase:'communication',index:1}, funnel_copy:{phase:'communication',index:2}, story_framework:{phase:'communication',index:3}, social_messaging:{phase:'communication',index:4},
+    wireframes_ux:{phase:'optimization',index:0}, crm:{phase:'optimization',index:1}, email_sequences:{phase:'optimization',index:2}, seo_mobile:{phase:'optimization',index:3}, analytics:{phase:'optimization',index:4},
+    paid_ads:{phase:'navigation',index:0}, ab_testing:{phase:'navigation',index:1}, retargeting:{phase:'navigation',index:2}, authority:{phase:'navigation',index:3}, kpi:{phase:'navigation',index:4}
+  };
+  function hasKey(k){ var m=indexMap[k]; if(!m) return null; var arr=state[m.phase]; if(!arr) return null; var v=arr[m.index]; return v===true?true:(v===false?false:null); }
+
+  // Tier details for results section
+  var tiers={
+    foundation:{ name:'Foundation Tier', bestFor:'Startups, rebrands, or businesses seeking strategic clarity.', timeline:'4–6 weeks', cta:'Unlock Pricing', deliverables:[
+      {label:'Brand Discovery Workshop', keys:['vmv','positioning','personas']},
+      {label:'Vision, Mission, Values', keys:['vmv']},
+      {label:'Brand Positioning & Audience Personas', keys:['positioning','personas']},
+      {label:'Visual Identity System (Logo, Typography, Color)', keys:['visual_id']},
+      {label:'Messaging Framework', keys:['messaging_playbook','voice']}
+    ]},
+    pro:{ name:'Pro Growth Tier', bestFor:'Growing brands ready to scale with systems.', timeline:'6–10 weeks', cta:'Unlock Pricing', deliverables:[
+      {label:'Everything in Foundation', keys:[]},
+      {label:'Website UX + Copy', keys:['wireframes_ux','website_copy']},
+      {label:'CRM Setup (HubSpot)', keys:['crm']},
+      {label:'Funnel Wireframes + Lead Magnet', keys:['email_sequences','funnel_copy']},
+      {label:'Email Sequences + SEO Optimization', keys:['email_sequences','seo_mobile']},
+      {label:'Social Starter Content Kit', keys:['social_messaging']}
+    ]},
+    authority:{ name:'Market Authority Tier', bestFor:'Brands ready to dominate their space and scale aggressively.', timeline:'3–6 months (Ongoing)', cta:'Unlock Pricing', deliverables:[
+      {label:'Everything in Pro Growth', keys:[]},
+      {label:'Paid Ad Strategy (Meta, Google, LinkedIn)', keys:['paid_ads']},
+      {label:'A/B Testing & Retargeting', keys:['ab_testing','retargeting']},
+      {label:'Thought Leadership Content (Webinars, Case Studies)', keys:['authority']},
+      {label:'Monthly KPI Reports + Performance Reviews', keys:['kpi']},
+      {label:'Growth Campaign Execution', keys:[]}
+    ]}
+  };
+
+  // ----- State -----
+  var state={}, current=0, showResults=false;
+  for(var si=0; si<phases.length; si++){ var a=[]; for(var sj=0; sj<phases[si].items.length; sj++){ a.push(null); } state[phases[si].key]=a; }
+
+  // ----- Helpers -----
+  function pctYes(arr){ var yes=0; for(var i=0;i<arr.length;i++){ if(arr[i]===true) yes++; } return Math.round((yes/arr.length)*100); }
+  function overall(){ var total=0, yes=0, keys=Object.keys(state); for(var i=0;i<keys.length;i++){ var a=state[keys[i]]; total+=a.length; for(var j=0;j<a.length;j++){ if(a[j]===true) yes++; } } return Math.round((yes/total)*100); }
+  function setStickyFromHeader(){ try{ var c=document.querySelectorAll('header, .site-header, .header, .navbar, .main-header, .header-area'); var base=80,maxH=0; for(var i=0;i<c.length;i++){ var el=c[i]; var h=el?el.offsetHeight:0; if(h>maxH) maxH=h; } var finalTop=(maxH?maxH+12:base); document.documentElement.style.setProperty('--im-sticky-top', finalTop+'px'); }catch(_){}}
+
+  // ----- UI builders -----
+  function renderMeters(){
+    var root=document.getElementById('imMeters'); if(!root) return;
+    var percId=pctYes(state.identity), percCom=pctYes(state.communication), percOpt=pctYes(state.optimization), percNav=pctYes(state.navigation);
+    var overallPct=overall();
+    var size=220, r=90, cx=size/2, cy=size/2, L=2*Math.PI*r, quarter=L*0.25, gap=L*0.02;
+    function arc(len, off, color){
+      return '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="'+color+'" stroke-width="14" stroke-linecap="round" stroke-dasharray="'+len+' '+L+'" stroke-dashoffset="-'+off+'" transform="rotate(-90 '+cx+' '+cy+')"/>';
+    }
+    var base = '<circle cx="'+cx+'" cy="'+cy+'" r="'+r+'" fill="none" stroke="#cfd3d7" stroke-width="14" opacity="0.4" />';
+    function seg(pct, idx, color){ var len=Math.max(0, quarter*(pct/100)-gap); var off=idx*quarter + gap/2; return arc(len, off, color); }
+    var svg = '<svg viewBox="0 0 '+size+' '+size+'" class="im-donut-svg">'+ base + seg(percId,0,'#d13833') + seg(percCom,1,'#ef4237') + seg(percOpt,2,'#ed7b39') + seg(percNav,3,'#f0ad1e') +
+              '<text x="'+cx+'" y="'+(cy-14)+'" class="im-donut-center" fill="#222" font-size="18" font-weight="700">Overall</text>'+
+              '<text x="'+cx+'" y="'+(cy+22)+'" class="im-donut-center im-donut-overall" fill="#222">'+overallPct+'%</text>'+
+              '</svg>';
+    var legend = ''+
+      '<div class="im-legend">'+
+        '<div class="im-legend-item"><span class="pct">'+percId+'%</span><span class="label" style="color:#d13833">Identity</span><div class="sub">Clarity that attracts</div></div>'+
+        '<div class="im-legend-item"><span class="pct">'+percCom+'%</span><span class="label" style="color:#ef4237">Communication</span><div class="sub">Messaging that connects</div></div>'+
+        '<div class="im-legend-item"><span class="pct">'+percOpt+'%</span><span class="label" style="color:#ed7b39">Optimization</span><div class="sub">Systems that scale</div></div>'+
+        '<div class="im-legend-item"><span class="pct">'+percNav+'%</span><span class="label" style="color:#f0ad1e">Navigation</span><div class="sub">Authority that leads</div></div>'+
+      '</div>';
+    root.innerHTML = '<div class="im-donut-wrap">'+svg+legend+'</div>';
+    var ov=document.getElementById('imOverall'); if(ov) ov.textContent = overallPct+'%';
+  }
+
+  function isPhaseComplete(idx){ var k=phases[idx].key; for(var i=0;i<state[k].length;i++){ if(state[k][i]===null) return false; } return true; }
+
+  function renderWizard(){
+    var root=document.getElementById('imWizard'); if(!root) return;
+    if(showResults){ root.style.display='none'; root.innerHTML=''; return; }
+    root.style.display='';
+    var phase=phases[current]; var total=phases.length; var items='';
+    for(var i=0;i<phase.items.length;i++){
+      var label=phase.items[i];
+      items+='<div class="im-item">'+
+               '<div class="im-item-title">'+label+'</div>'+
+               '<div class="d-flex gap-2">'+
+                 '<button class="im-chip im-yes" aria-pressed="'+(state[phase.key][i]===true)+'" data-phase="'+phase.key+'" data-idx="'+i+'" data-val="yes">Yes</button>'+
+                 '<button class="im-chip im-no" aria-pressed="'+(state[phase.key][i]===false)+'" data-phase="'+phase.key+'" data-idx="'+i+'" data-val="no">No</button>'+
+               '</div>'+
+             '</div>';
+    }
+    var canNext=isPhaseComplete(current);
+    var nextLabel=(current===total-1)?'See your results below':('Next: '+phases[current+1].title);
+    var html='<div class="bg-white rounded-4 shadow-sm border-0 p-4">'+
+               '<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">'+
+                 '<h2 class="h5 m-0 text-dark">'+phase.title+'</h2>'+
+                 '<span class="text-muted small">Phase '+(current+1)+' of '+total+'</span>'+
+               '</div>'+
+               '<div class="mt-3 im-items">'+items+'</div>'+
+               '<div class="d-flex justify-content-between mt-3">'+
+                 '<button id="imBack" class="btn-three" '+(current===0?'disabled':'')+'>Back</button>'+
+                 '<button id="imNext" class="btn-two" '+(!canNext?'disabled':'')+'>'+nextLabel+'</button>'+
+               '</div>'+
+             '</div>';
+    root.innerHTML=html;
+  }
+
+  function recommend(){ var id=pctYes(state.identity),com=pctYes(state.communication),opt=pctYes(state.optimization),nav=pctYes(state.navigation); if(id<50) return {tier:'Foundation',color:'#d13833',reason:'Identity is the constraint—shore up brand DNA, positioning, personas, and visuals.'}; if(com<70||opt<70) return {tier:'Pro Growth',color:'#f0ad1e',reason:'Messaging and/or systems need reinforcement before scaling.'}; if(nav<70) return {tier:'Market Authority',color:'#183C44',reason:'Scale with paid, experimentation, and dashboards.'}; return {tier:'Market Authority',color:'#183C44',reason:'Strong fundamentals—double down on authority plays and optimization.'}; }
+
+  function renderRecommendation(){ var panel=document.getElementById('imRec'); if(!panel) return; var keys=Object.keys(state),total=0,answered=0; for(var i=0;i<keys.length;i++){ var a=state[keys[i]]; total+=a.length; for(var j=0;j<a.length;j++){ if(a[j]!==null) answered++; } } if(answered<total){ panel.style.display='none'; panel.innerHTML=''; return; } var rec=recommend(); panel.style.display=''; var html='<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">'+'<div>'+'<div class="text-muted small">Recommended Starting Tier</div>'+'<div class="mt-1 h5 m-0">'+rec.tier+'</div>'+'<p class="mt-2 text-muted">'+rec.reason+'</p>'+'</div>'+'<span class="im-badge" style="background:'+rec.color+'">'+rec.tier+'</span>'+'</div>'; panel.innerHTML=html; }
+
+  function tierKeyFromRec(t){ if(t==='Foundation') return 'foundation'; if(t==='Pro Growth') return 'pro'; return 'authority'; }
+
+  function renderResults(){ var wrap=document.getElementById('imResults'); if(!wrap) return; var rec=recommend(); var key=tierKeyFromRec(rec.tier); var cfg=tiers[key]; var list=''; for(var i=0;i<cfg.deliverables.length;i++){ var d=cfg.deliverables[i]; var missing=false; if(d.keys&&d.keys.length){ for(var j=0;j<d.keys.length;j++){ var hv=hasKey(d.keys[j]); if(hv===false||hv===null){ missing=true; break; } } } list+='<li class="'+(missing?'im-missing':'im-available')+'" style="padding:.5rem .75rem;border-radius:8px;margin-bottom:8px;">'+d.label+'</li>'; } var html='<div class="bg-white rounded-4 shadow-sm border-0 p-4">'+'<div class="d-flex justify-content-between align-items-center flex-wrap gap-2">'+'<h2 class="h5 m-0 text-dark">'+cfg.name+'</h2>'+'<button id="imBackQuestions" class="btn-three">Back to questions</button>'+'</div>'+'<p class="text-muted mt-2">'+rec.reason+'</p>'+'<div class="mt-3"><strong>Best for:</strong> '+cfg.bestFor+'</div>'+'<div class="mt-1"><strong>Timeline:</strong> '+cfg.timeline+'</div>'+'<div class="mt-3"><a class="btn-two" href="#contact">'+cfg.cta+'</a></div>'+'<div class="mt-4"><strong>Key Deliverables</strong></div>'+'<ul class="mt-2" style="list-style:none;padding-left:0;">'+list+'</ul>'+'</div>'; wrap.innerHTML=html; }
+
+  function scrollToResults(){ var sec=document.getElementById('imResults'); if(sec&&sec.scrollIntoView){ sec.scrollIntoView({behavior:'smooth',block:'start'}); } }
+
+  // ----- Events -----
+  function attachEvents(){
+    var wizard=document.getElementById('imWizard'); if(!wizard) return;
+    wizard.addEventListener('click', function(e){
+      var chip = e.target && e.target.closest ? e.target.closest('.im-chip') : null;
+      if(chip){ var phase=chip.getAttribute('data-phase'); var idx=parseInt(chip.getAttribute('data-idx'),10); var val=chip.getAttribute('data-val'); state[phase][idx] = (val==='yes'); renderMeters(); renderWizard(); renderRecommendation(); return; }
+      if(e.target && e.target.id==='imBack'){ if(current>0){ current--; renderWizard(); } return; }
+      if(e.target && e.target.id==='imNext'){ if(!isPhaseComplete(current)) return; if(current < phases.length-1){ current++; renderWizard(); } else { showResults=true; renderWizard(); renderRecommendation(); renderResults(); scrollToResults(); } return; }
+    });
+
+    var results=document.getElementById('imResults');
+    if(results){ results.addEventListener('click', function(e){ if(e.target && e.target.id==='imBackQuestions'){ showResults=false; renderWizard(); var wiz=document.getElementById('imWizard'); if(wiz&&wiz.scrollIntoView){ wiz.scrollIntoView({behavior:'smooth',block:'start'}); } } }); }
+
+    var reset=document.getElementById('imReset');
+    if(reset){ reset.addEventListener('click', function(){ for(var i=0;i<phases.length;i++){ var p=phases[i]; var arr=[]; for(var j=0;j<p.items.length;j++){ arr.push(null); } state[p.key]=arr; } current=0; showResults=false; renderMeters(); renderWizard(); renderRecommendation(); var res=document.getElementById('imResults'); if(res) res.innerHTML=''; }); }
+
+    var csv=document.getElementById('imCsv');
+    if(csv){ csv.addEventListener('click', function(){
+      var rows=[["Phase","Item","Answer"]];
+      for(var i=0;i<phases.length;i++){
+        var p=phases[i];
+        for(var j=0;j<p.items.length;j++){
+          var ans=state[p.key][j];
+          rows.push([p.title, p.items[j], ans===true?'Yes':(ans===false?'No':'')]);
+        }
+      }
+      rows.push(["","",""],["Phase % Yes","",""]);
+      for(var k=0;k<phases.length;k++){
+        var pp=phases[k];
+        rows.push([pp.title, '% Yes', pctYes(state[pp.key]) + '%']);
+      }
+      rows.push(['Overall','% Yes', overall() + '%']);
+      var parts=[];
+      for(var r=0;r<rows.length;r++){
+        var row=rows[r];
+        for(var c=0;c<row.length;c++){
+          var cell=String(row[c]).replace(/"/g,'""');
+          row[c]='"'+cell+'"';
+        }
+        parts.push(row.join(','));
+      }
+      var csvStr=parts.join('\n');
+      var blob=new Blob([csvStr],{type:'text/csv;charset=utf-8;'});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement('a'); a.href=url; a.download='icon-method-yesno-assessment.csv'; a.click(); URL.revokeObjectURL(url);
+    }); }
+  }
+
+  function init(){ renderMeters(); renderWizard(); renderRecommendation(); attachEvents(); setStickyFromHeader(); window.addEventListener('resize', setStickyFromHeader); }
+  function boot(){ try{ init(); } catch(e){ fail(e); } }
+
+  if(document.readyState==='loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+})();
+</script>
+</body>
+</html>
